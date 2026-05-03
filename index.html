@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Happy Birthday Manswee! 🎂</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Inter:wght@400;500;600&family=Caveat:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 :root{--bg:#1a1614;--card:#2a2420;--accent:#e8c170;--accent2:#d4956a;--text:#f5efe6;--text2:#b8a898;--border:#3d3530}
@@ -22,6 +22,22 @@ button{-webkit-appearance:none;touch-action:manipulation;-webkit-tap-highlight-c
 .start-btn{background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--bg);border:none;padding:16px 48px;font-size:1.1rem;font-weight:600;border-radius:50px;cursor:pointer;letter-spacing:1px;animation:fadeUp 0.8s ease 0.4s both;transition:transform 0.2s,box-shadow 0.2s;font-family:'Inter',sans-serif}
 .start-btn:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(232,193,112,0.3)}
 .sparkle{position:absolute;width:4px;height:4px;background:var(--accent);border-radius:50%;animation:twinkle 2s infinite;opacity:0}
+
+/* ===== PASSWORD SCREEN ===== */
+#passwordScreen{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;text-align:center;padding:2rem;position:relative;overflow:hidden}
+#passwordScreen::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%,rgba(232,193,112,0.06) 0%,transparent 70%)}
+.pw-icon{font-size:3rem;margin-bottom:1rem;animation:fadeDown 0.6s ease}
+.pw-title{font-family:'Playfair Display',serif;font-size:clamp(1.5rem,4vw,2rem);margin-bottom:0.5rem;animation:fadeDown 0.6s ease 0.1s both}
+.pw-sub{color:var(--text2);font-size:0.95rem;margin-bottom:2rem;animation:fadeDown 0.6s ease 0.2s both}
+.pw-input-wrap{position:relative;animation:fadeUp 0.6s ease 0.3s both}
+.pw-input{background:var(--card);border:2px solid var(--border);color:var(--text);padding:14px 24px;font-size:1.1rem;border-radius:12px;text-align:center;width:260px;font-family:'Inter',sans-serif;outline:none;transition:border-color 0.3s}
+.pw-input:focus{border-color:var(--accent)}
+.pw-input::placeholder{color:var(--text2);opacity:0.5}
+.pw-submit{background:linear-gradient(135deg,var(--accent),var(--accent2));color:var(--bg);border:none;padding:14px 40px;font-size:1rem;font-weight:600;border-radius:50px;cursor:pointer;margin-top:1rem;font-family:'Inter',sans-serif;transition:transform 0.2s,box-shadow 0.2s;animation:fadeUp 0.6s ease 0.4s both;touch-action:manipulation;-webkit-appearance:none}
+.pw-submit:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(232,193,112,0.3)}
+.pw-error{color:#e74c3c;font-size:0.85rem;margin-top:0.8rem;min-height:1.2em;transition:opacity 0.3s}
+.pw-shake{animation:shake 0.4s ease}
+@keyframes shake{0%,100%{transform:translateX(0)}20%,60%{transform:translateX(-8px)}40%,80%{transform:translateX(8px)}}
 
 /* ===== PUZZLE SCREEN ===== */
 #puzzleScreen{display:none;min-height:100vh;padding:1rem}
@@ -47,15 +63,22 @@ button{-webkit-appearance:none;touch-action:manipulation;-webkit-tap-highlight-c
 
 /* ===== WIN SCREEN ===== */
 #winScreen{display:none;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;text-align:center;padding:2rem;position:relative;overflow:hidden}
-.win-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,6vw,3.5rem);margin-bottom:0.5rem;animation:fadeDown 0.6s ease}
+.win-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,6vw,3.5rem);margin-bottom:1.5rem;animation:fadeDown 0.6s ease}
 .win-title span{color:var(--accent)}
-.win-sub{color:var(--text2);font-size:1.1rem;margin-bottom:2rem;animation:fadeDown 0.6s ease 0.1s both}
-.win-img{width:clamp(200px,50vw,350px);border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,0.5);margin-bottom:1.5rem;animation:fadeUp 0.8s ease 0.2s both}
-.win-stats{display:flex;gap:2rem;margin-bottom:2rem;animation:fadeUp 0.6s ease 0.3s both}
+.win-row{display:flex;align-items:center;justify-content:center;gap:2.5rem;flex-wrap:wrap;margin-bottom:2rem;animation:fadeUp 0.8s ease 0.2s both;width:100%;max-width:900px}
+.win-img{width:clamp(180px,30vw,280px);border-radius:12px;box-shadow:0 20px 60px rgba(0,0,0,0.5);flex-shrink:0}
+.win-stats{display:flex;gap:2rem;margin-bottom:1.5rem;animation:fadeUp 0.6s ease 0.3s both}
 .win-stat{text-align:center}
 .win-stat .val{font-size:1.5rem;font-weight:700;color:var(--accent)}
 .win-stat .lbl{font-size:0.75rem;color:var(--text2);text-transform:uppercase;letter-spacing:1px}
-.win-msg{font-family:'Playfair Display',serif;font-size:1.3rem;font-style:italic;color:var(--accent);animation:fadeUp 0.6s ease 0.4s both}
+.letter{position:relative;background:linear-gradient(180deg,#faf6ef 0%,#f3ece0 100%);color:#3d2c1e;max-width:480px;width:90%;padding:2.5rem 2rem 2rem;border-radius:4px;box-shadow:0 2px 4px rgba(0,0,0,0.1),0 8px 24px rgba(0,0,0,0.15),0 20px 50px rgba(0,0,0,0.2);text-align:left;line-height:1.7}
+.letter::before{content:'';position:absolute;top:0;left:0;right:0;height:6px;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent));border-radius:4px 4px 0 0}
+.letter::after{content:'';position:absolute;bottom:12px;right:16px;width:60px;height:60px;background:radial-gradient(circle,rgba(232,193,112,0.15) 0%,transparent 70%);border-radius:50%}
+.letter-stamp{position:absolute;top:14px;right:16px;font-size:1.5rem;transform:rotate(12deg);opacity:0.7}
+.letter-greeting{font-family:'Playfair Display',serif;font-size:1.3rem;font-weight:700;color:#5a3e28;margin-bottom:0.8rem}
+.letter-body{font-family:'Caveat',cursive;font-size:1.25rem;color:#4a3728;line-height:1.8}
+.letter-sign{font-family:'Caveat',cursive;font-size:1.4rem;color:var(--accent2);margin-top:1.2rem;text-align:right;font-weight:600}
+.win-footer{font-family:'Playfair Display',serif;font-size:1.1rem;font-style:italic;color:var(--accent);animation:fadeUp 0.6s ease 0.5s both}
 
 /* ===== CONFETTI ===== */
 .confetti-piece{position:fixed;width:10px;height:10px;top:-20px;z-index:9999;animation:confettiFall linear forwards}
@@ -68,16 +91,61 @@ button{-webkit-appearance:none;touch-action:manipulation;-webkit-tap-highlight-c
 
 /* ===== RESPONSIVE ===== */
 @media(max-width:768px){
-  .puzzle-layout{flex-direction:column;align-items:center}
-  .tray{width:100%;min-height:200px}
-  .hud{gap:0.8rem}
+  body{overflow-y:auto}
+  #startScreen{padding:1.5rem;min-height:100dvh}
+  .start-preview{width:clamp(150px,50vw,220px)}
+  .start-btn{padding:14px 36px;font-size:1rem}
+  #passwordScreen{padding:1.5rem;min-height:100dvh}
+  .pw-input{width:220px;padding:12px 18px;font-size:1rem}
+  .pw-submit{padding:12px 32px;font-size:0.95rem}
+  #puzzleScreen{padding:0.5rem;min-height:auto}
+  .puzzle-header{padding:0.4rem 0.5rem;flex-wrap:wrap;gap:0.3rem}
+  .puzzle-header h2{font-size:1rem;width:100%;text-align:center}
+  .hud{gap:0.6rem;justify-content:center;width:100%}
+  .hud-item{font-size:0.75rem}
+  .puzzle-layout{flex-direction:column;align-items:center;gap:0.8rem;padding:0 0.3rem}
+  .board-container{padding:4px;border-radius:8px}
+  .tray{width:100%;min-height:160px;max-height:35vh;overflow-y:auto;padding:10px 6px;gap:2px;border-radius:8px}
+  .tray-label{font-size:0.6rem;top:-8px;left:10px}
+  .ref-toggle{padding:6px 12px;font-size:0.75rem}
+  .ref-img{max-width:140px}
+  #winScreen{padding:1.5rem 1rem;min-height:100dvh}
+  .win-title{font-size:clamp(1.5rem,5vw,2.2rem);margin-bottom:1rem}
+  .win-row{gap:1.5rem}
+  .win-img{width:clamp(160px,45vw,240px)}
+  .win-stats{gap:1.2rem;margin-bottom:1rem}
+  .win-stat .val{font-size:1.2rem}
+  .letter{padding:1.8rem 1.4rem 1.5rem;max-width:100%}
+  .letter-greeting{font-size:1.1rem}
+  .letter-body{font-size:1.1rem;line-height:1.7}
+  .letter-sign{font-size:1.2rem}
+  .win-footer{font-size:0.95rem}
+}
+@media(max-width:400px){
+  .start-title span{font-size:clamp(2rem,10vw,3rem)}
+  .pw-input{width:190px}
+  .hud-item{font-size:0.7rem}
+  .letter{padding:1.5rem 1.2rem 1.2rem}
+  .letter-body{font-size:1rem}
 }
 </style>
 </head>
 <body>
 
+<!-- PASSWORD SCREEN -->
+<div id="passwordScreen">
+  <div class="pw-icon">🔒</div>
+  <h1 class="pw-title">This surprise is locked</h1>
+  <p class="pw-sub">Enter the secret word to continue</p>
+  <div class="pw-input-wrap" id="pwWrap">
+    <input type="text" class="pw-input" id="pwInput" placeholder="secret word..." autocomplete="off" autocapitalize="none">
+  </div>
+  <button class="pw-submit" id="pwBtn">Unlock ✨</button>
+  <div class="pw-error" id="pwError"></div>
+</div>
+
 <!-- START SCREEN -->
-<div id="startScreen">
+<div id="startScreen" style="display:none">
   <div class="start-badge">✦ a special surprise ✦</div>
   <h1 class="start-title">Happy Birthday<span>Manswee!</span></h1>
   <p class="start-sub">Solve the puzzle to unlock your memory 🎁</p>
@@ -88,7 +156,7 @@ button{-webkit-appearance:none;touch-action:manipulation;-webkit-tap-highlight-c
 <!-- PUZZLE SCREEN -->
 <div id="puzzleScreen">
   <div class="puzzle-header">
-    <h2>✦ Piece it together</h2>
+    <h2 id="devSkip">✦ Piece it together</h2>
     <div class="hud">
       <div class="hud-item">⏱ <span id="timer">0:00</span></div>
       <div class="hud-item">🧩 <span id="moveCount">0</span> moves</div>
@@ -112,13 +180,22 @@ button{-webkit-appearance:none;touch-action:manipulation;-webkit-tap-highlight-c
 <!-- WIN SCREEN -->
 <div id="winScreen">
   <h1 class="win-title">🎂 Happy Birthday, <span>Manswee!</span> 🎂</h1>
-  <p class="win-sub"> Happy Birthday!!! i know this isn't great and seriously nothing compared to the one you made me but i had to give it a try and i hope the sun, the moon, the rising and the venus all work in favour with u CAUSE I WANT THAT!! muahhh and can't wait to see you soon!😚</p>
-  <img class="win-img" id="winImg" alt="completed puzzle">
   <div class="win-stats">
     <div class="win-stat"><div class="val" id="winTime">-</div><div class="lbl">Time</div></div>
     <div class="win-stat"><div class="val" id="winMoves">-</div><div class="lbl">Moves</div></div>
   </div>
-  <p class="win-msg">happy birthday muah 💛</p>
+  <div class="win-row">
+    <img class="win-img" id="winImg" alt="completed puzzle">
+    <div class="letter">
+      <div class="letter-stamp">💌</div>
+      <div class="letter-greeting">Dear Manswee,</div>
+      <div class="letter-body">
+        Happy Birthday!!! i know this isn't great and seriously nothing compared to the one you made me but i had to give it a try and i hope the sun, the moon, the rising and the venus all work in favour with u CAUSE I WANT THAT!! muahhh and can't wait to see you soon! 😚
+      </div>
+      <div class="letter-sign">— with love, kalista</div>
+    </div>
+  </div>
+  <p class="win-footer">happy birthday muah ✨</p>
 </div>
 
 <script>
@@ -137,11 +214,38 @@ document.getElementById('previewImg').src=IMG_SRC;
 document.getElementById('refImg').src=IMG_SRC;
 document.getElementById('winImg').src=IMG_SRC;
 
+// Password check
+function checkPassword(){
+  const val=document.getElementById('pwInput').value.trim().toLowerCase();
+  if(val==='kalista'){
+    document.getElementById('passwordScreen').style.display='none';
+    document.getElementById('startScreen').style.display='flex';
+  }else{
+    document.getElementById('pwError').textContent='Wrong password, try again!';
+    const wrap=document.getElementById('pwWrap');
+    wrap.classList.remove('pw-shake');
+    void wrap.offsetWidth;
+    wrap.classList.add('pw-shake');
+  }
+}
+document.getElementById('pwBtn').addEventListener('touchend',function(e){e.preventDefault();checkPassword();});
+document.getElementById('pwBtn').addEventListener('click',checkPassword);
+document.getElementById('pwInput').addEventListener('keydown',function(e){if(e.key==='Enter')checkPassword();});
+
 // Wire up buttons (addEventListener works better on iOS than onclick)
 document.getElementById('startBtn').addEventListener('touchend',function(e){e.preventDefault();startPuzzle();});
 document.getElementById('startBtn').addEventListener('click',startPuzzle);
 document.getElementById('refBtn').addEventListener('touchend',function(e){e.preventDefault();toggleRef();});
 document.getElementById('refBtn').addEventListener('click',toggleRef);
+
+// Secret dev skip: tap header 5 times to skip to win
+let devTaps=0,devTimer=null;
+document.getElementById('devSkip').addEventListener('click',function(){
+  devTaps++;
+  clearTimeout(devTimer);
+  devTimer=setTimeout(()=>{devTaps=0;},2000);
+  if(devTaps>=5){devTaps=0;onWin();}
+});
 
 // Create sparkles on start screen
 (function createSparkles(){
